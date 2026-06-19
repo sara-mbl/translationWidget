@@ -64,4 +64,4 @@ MIT — free to use, modify, and distribute. See [LICENSE](./LICENSE).
 ## Author
 
 **Sara Bustamante**
-[GitHub](https://github.com/sarabus-coder) · [LinkedIn](https://www.linkedin.com/in/sarambl/)
+[GitHub](https://github.com/sara-mbl/) · [LinkedIn](https://www.linkedin.com/in/sarambl/)
