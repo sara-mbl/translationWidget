@@ -55,7 +55,12 @@ This tool generates embeds based on Google's **legacy Website Translator widget*
 
 ## Browser support
 
-Works in all modern browsers. Chromium-based browsers (Chrome, Edge, Opera, Brave) may show their own built-in "Translate this page?" prompt in addition to this widget — that's separate browser UI, not a bug in this tool.
+Works in all modern browsers. Some browsers show their **own native translate prompt** in addition to this widget — this is OS/browser-level UI, not part of the page, and cannot be hidden, styled, or suppressed by any code on the page:
+
+- **Chromium desktop** (Chrome, Edge, Opera, Brave) — "Translate this page?" popup
+- **Safari on iOS** — "View this page in: [language] / Translate" bar
+
+These prompts are rendered by the browser shell itself, outside the page's DOM — there is no iframe, no element, nothing CSS or JavaScript can target. Setting an accurate `lang` attribute on `<html>` (matching your page's actual source language) reduces how often these prompts appear, but cannot eliminate them once a browser decides to offer translation. This is expected, unavoidable behavior — not a bug in this widget.
 
 ## License
 
