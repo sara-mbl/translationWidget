@@ -24,7 +24,11 @@ html,body{height:100%}
 }
 .gts-page *{box-sizing:border-box}
 .gts-studio{display:grid;grid-template-columns:340px 1fr;border:1px solid var(--bd);border-radius:14px;overflow:hidden;height:calc(100vh - 48px);background:var(--bg0)}
-.gts-panel{padding:1.5rem;border-right:1px solid var(--bd);overflow-y:auto;overflow-x:hidden;background:var(--bg1);min-width:0;height:100%}
+.gts-panel{padding:1.5rem;border-right:1px solid var(--bd);overflow-y:scroll;overflow-x:hidden;background:var(--bg1);min-width:0;height:100%;scrollbar-gutter:stable}
+.gts-panel::-webkit-scrollbar{width:10px}
+.gts-panel::-webkit-scrollbar-track{background:var(--bg1)}
+.gts-panel::-webkit-scrollbar-thumb{background:var(--bg3);border-radius:5px}
+.gts-panel::-webkit-scrollbar-thumb:hover{background:var(--bdh)}
 .gts-parea{padding:1.5rem;background:var(--bg0);display:flex;flex-direction:column;gap:16px;min-width:0;height:100%;overflow-y:auto}
 
 .gts-sl{font-size:14px;font-weight:600;color:var(--txt3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px;margin-top:22px;display:flex;align-items:center;gap:8px}
@@ -100,7 +104,7 @@ html,body{height:100%}
 @media (max-width: 900px){
   .gts-page{height:auto;overflow:visible;min-height:100vh}
   .gts-studio{grid-template-columns:1fr;height:auto;min-height:auto}
-  .gts-panel{border-right:none;border-bottom:1px solid var(--bd);max-height:480px;height:auto}
+  .gts-panel{border-right:none;border-bottom:1px solid var(--bd);max-height:480px;height:auto;overflow-y:scroll}
   .gts-parea{height:auto;overflow-y:visible}
   .gts-pframe{min-height:280px;flex:none}
   .gts-lgrid{grid-template-columns:1fr 1fr}
