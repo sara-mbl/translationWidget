@@ -6,7 +6,7 @@ A no-build, single-file design studio for creating and customizing Google Transl
 
 ## Live demo
 
-Open [`translate_studio.html`](./translate_studio.html) directly in a browser, or visit the [GitHub Pages demo](#) (update once Pages is enabled).
+Open [`translate_studio.html`](./translate_studio.html) directly in a browser, or visit the [GitHub Pages demo](https://sara-mbl.github.io/translationWidget/translate_studio).
 
 ## Features
 
