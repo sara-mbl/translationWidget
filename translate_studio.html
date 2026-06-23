@@ -91,7 +91,7 @@ html,body{height:100%}
 #gts-pv-fab-menu{border-radius:12px;padding:6px;min-width:150px;display:none;flex-direction:column;gap:3px;max-height:200px;overflow-y:auto}
 #gts-pv-fab-menu.open{display:flex}
 #gts-pv-fab-btn{display:flex;align-items:center;gap:8px;border:none;cursor:pointer;font-weight:500;font-family:inherit}
-#gts-pv-banner{position:absolute;top:0;left:0;right:0;display:none;align-items:center;justify-content:center;gap:10px;padding:10px 16px}
+#gts-pv-banner{position:absolute;top:0;left:0;right:0;display:none;align-items:center;justify-content:center;gap:10px;padding:10px 16px;line-height:1}
 #gts-pv-inline{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);display:none;align-items:center;gap:9px;padding:8px 16px}
 .gts-pv-mi{padding:7px 12px;border-radius:7px;font-size:14px;color:#fff;cursor:pointer;display:flex;align-items:center;gap:7px}
 .gts-pv-mi:hover{background:rgba(255,255,255,.2)}
@@ -280,8 +280,8 @@ html,body{height:100%}
         <div id="gts-pv-fab-menu"></div>
         <button id="gts-pv-fab-btn" onclick="gtsPvToggle('gts-pv-fab-menu')"><span id="gts-pv-fab-ic" class="gts-gicon"></span><span id="gts-pv-fab-lbl">Translate</span></button>
       </div>
-      <div id="gts-pv-banner"><span style="font-size:12px;font-weight:500;color:#fff;display:flex;align-items:center;gap:5px"><span id="gts-pv-bic" class="gts-gicon"></span> <span id="gts-pv-blbl">View in:</span></span><button id="gts-pv-bbtn" style="font-size:11px;border-radius:5px;padding:3px 8px;border:0.5px solid rgba(255,255,255,.4);background:rgba(255,255,255,.15);color:#fff;cursor:pointer">Select language ▼</button></div>
-      <div id="gts-pv-inline"><span style="font-size:12px;font-weight:500;display:flex;align-items:center;gap:5px" id="gts-pv-itxt"><span id="gts-pv-iic" class="gts-gicon"></span> <span id="gts-pv-ilbl">Language:</span></span><button id="gts-pv-ibtn" style="font-size:11px;border-radius:5px;padding:3px 8px;cursor:pointer">Select ▼</button></div>
+      <div id="gts-pv-banner"><span style="font-size:12px;font-weight:500;color:#fff;display:flex;align-items:center;line-height:1;gap:5px"><span id="gts-pv-bic" class="gts-gicon" style="display:inline-flex;align-items:center"></span><span id="gts-pv-blbl">View in:</span></span><button id="gts-pv-bbtn" style="font-size:11px;border-radius:5px;padding:3px 8px;border:0.5px solid rgba(255,255,255,.4);background:rgba(255,255,255,.15);color:#fff;cursor:pointer;line-height:1;display:inline-flex;align-items:center;gap:4px">Select language ▼</button></div>
+      <div id="gts-pv-inline" style="line-height:1"><span style="font-size:12px;font-weight:500;display:inline-flex;align-items:center;line-height:1;gap:5px" id="gts-pv-itxt"><span id="gts-pv-iic" class="gts-gicon" style="display:inline-flex;align-items:center"></span><span id="gts-pv-ilbl">Language:</span></span><button id="gts-pv-ibtn" style="font-size:11px;border-radius:5px;padding:3px 8px;cursor:pointer;line-height:1;display:inline-flex;align-items:center">Select ▼</button></div>
     </div>
     <div class="gts-ebox">
       <pre class="gts-ecode" id="gts-embed-out"></pre>
@@ -592,30 +592,32 @@ body{top:0!important}
     const push=gtsV('gts-banner-push');
     const bfs=gtsV('gts-banner-fs');
     const blbl=gtsV('gts-banner-lbl')||'View in:', bbtn=gtsV('gts-banner-btn')||'Select language';
-    css=`#gt-banner{position:fixed;top:0;left:0;right:0;z-index:99999;display:flex;align-items:center;justify-content:center;gap:10px;padding:8px 20px;background:${bg};box-shadow:${shadow};border:${border}}
-#gt-banner-lbl{color:${txt};font-size:${bfs}px;font-weight:500;display:flex;align-items:center;gap:6px}
-#gt-banner-icon{color:${icon};line-height:0;width:15px;height:15px}
+    css=`#gt-banner{position:fixed;top:0;left:0;right:0;z-index:99999;display:flex;align-items:center;justify-content:center;gap:10px;padding:8px 20px;background:${bg};box-shadow:${shadow};border:${border};line-height:1}
+#gt-banner-lbl{color:${txt};font-size:${bfs}px;font-weight:500;display:inline-flex;align-items:center;line-height:1;gap:6px}
+#gt-banner-icon{color:${icon};line-height:0;width:15px;height:15px;display:inline-flex;align-items:center}
+#gt-banner-btn{display:inline-flex;align-items:center;gap:4px;line-height:1}
 #gt-menu{position:fixed;top:${+push+4}px;left:50%;transform:translateX(-50%);z-index:999999;background:${bg};border-radius:${Math.min(br,12)}px;box-shadow:${shadow};border:${border};padding:6px;min-width:150px;max-height:240px;overflow-y:auto;display:none;flex-direction:column;gap:2px}
 #gt-menu.open{display:flex}${shared}
 body{margin-top:${push}px!important;top:0!important}`;
     html=`<div id="gt-banner" data-trigger="true">
-  <span id="gt-banner-lbl"><span id="gt-banner-icon">${svgIcon.replace(/1em/g,'100%')}</span> ${blbl}</span>
-  <button onclick="document.getElementById('gt-menu').classList.toggle('open')" style="background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.4);color:${txt};border-radius:6px;padding:4px 10px;font-size:${Math.max(10,+bfs-1)}px;cursor:pointer">${bbtn} &#9660;</button>
+  <span id="gt-banner-lbl"><span id="gt-banner-icon">${svgIcon.replace(/1em/g,'100%')}</span><span>${blbl}</span></span>
+  <button id="gt-banner-btn" onclick="document.getElementById('gt-menu').classList.toggle('open')" style="background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.4);color:${txt};border-radius:6px;padding:4px 10px;font-size:${Math.max(10,+bfs-1)}px;cursor:pointer">${bbtn} &#9660;</button>
 </div>
 <div id="gt-menu">\n${menuItems}\n</div>
 <div id="google_translate_element"></div>`;
   } else {
     const ilbl=gtsV('gts-inline-lbl')||'Language:', ibtn=gtsV('gts-inline-btn')||'Select';
     const ifs=gtsV('gts-inline-fs');
-    css=`#gt-inline{display:flex;align-items:center;justify-content:center;gap:8px;padding:7px 14px;border-radius:${br}px;background:${bg};box-shadow:${shadow};border:${border};position:relative;width:fit-content}
-#gt-inline-lbl{color:${txt};font-size:${ifs}px;font-weight:500;display:flex;align-items:center;gap:6px}
-#gt-inline-icon{color:${icon};line-height:0;width:15px;height:15px;display:flex;align-items:center}
+    css=`#gt-inline{display:flex;align-items:center;justify-content:center;gap:8px;padding:7px 14px;border-radius:${br}px;background:${bg};box-shadow:${shadow};border:${border};position:relative;width:fit-content;line-height:1}
+#gt-inline-lbl{color:${txt};font-size:${ifs}px;font-weight:500;display:inline-flex;align-items:center;line-height:1;gap:6px}
+#gt-inline-icon{color:${icon};line-height:0;width:15px;height:15px;display:inline-flex;align-items:center}
+#gt-inline-btn{display:inline-flex;align-items:center;gap:4px;line-height:1}
 #gt-menu{position:absolute;top:110%;left:50%;transform:translateX(-50%);z-index:999999;background:${bg};border-radius:${Math.min(br,12)}px;box-shadow:${shadow};border:${border};padding:6px;min-width:150px;max-height:240px;overflow-y:auto;display:none;flex-direction:column;gap:2px}
 #gt-menu.open{display:flex}${shared}
 body{top:0!important}`;
     html=`<div id="gt-inline" data-trigger="true">
-  <span id="gt-inline-lbl"><span id="gt-inline-icon">${svgIcon.replace(/1em/g,'100%')}</span> ${ilbl}</span>
-  <button onclick="document.getElementById('gt-menu').classList.toggle('open')" style="background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.4);color:${txt};border-radius:6px;padding:4px 10px;font-size:${Math.max(10,+ifs-1)}px;cursor:pointer">${ibtn} &#9660;</button>
+  <span id="gt-inline-lbl"><span id="gt-inline-icon">${svgIcon.replace(/1em/g,'100%')}</span><span>${ilbl}</span></span>
+  <button id="gt-inline-btn" onclick="document.getElementById('gt-menu').classList.toggle('open')" style="background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.4);color:${txt};border-radius:6px;padding:4px 10px;font-size:${Math.max(10,+ifs-1)}px;cursor:pointer">${ibtn} &#9660;</button>
   <div id="gt-menu">\n${menuItems}\n  </div>
 </div>
 <div id="google_translate_element"></div>`;
