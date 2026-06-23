@@ -603,11 +603,52 @@ body{top:0!important}`;
 }
 
 function gtsCopyEmbed(){
-  navigator.clipboard.writeText(document.getElementById('gts-embed-out').textContent).then(()=>{
-    const b=document.querySelector('.gts-cbtn');
+  const text=document.getElementById('gts-embed-out').textContent;
+  const b=document.querySelector('.gts-cbtn');
+  function showCopied(){
     b.textContent='✓ Copied!';
     setTimeout(()=>{b.textContent='📋 Copy'},2000);
-  });
+  }
+  function showFailed(){
+    b.textContent='Select & copy manually';
+    setTimeout(()=>{b.textContent='📋 Copy'},2500);
+  }
+  function fallbackCopy(){
+    const ta=document.createElement('textarea');
+    ta.value=text;
+    ta.style.position='fixed';
+    ta.style.top='0';
+    ta.style.left='0';
+    ta.style.opacity='0';
+    ta.readOnly=true;
+    document.body.appendChild(ta);
+    ta.focus();
+    ta.select();
+    ta.setSelectionRange(0,text.length);
+    let ok=false;
+    try{ ok=document.execCommand('copy'); }catch(e){ ok=false; }
+    document.body.removeChild(ta);
+    if(ok){ showCopied(); } else { selectEmbedText(); showFailed(); }
+  }
+  function selectEmbedText(){
+    const pre=document.getElementById('gts-embed-out');
+    const range=document.createRange();
+    range.selectNodeContents(pre);
+    const sel=window.getSelection();
+    sel.removeAllRanges();
+    sel.addRange(range);
+  }
+  let triedAsync=false;
+  try{
+    if(navigator.clipboard && navigator.clipboard.writeText && window.isSecureContext){
+      triedAsync=true;
+      navigator.clipboard.writeText(text).then(showCopied).catch(function(){ fallbackCopy(); });
+    } else {
+      fallbackCopy();
+    }
+  } catch(e){
+    if(!triedAsync) fallbackCopy();
+  }
 }
 
 gtsSetLayout('corner');
