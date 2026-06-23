@@ -437,6 +437,11 @@ function gtsRender(){
     document.getElementById('gts-pv-bbtn').innerHTML=bbtn+' ▼';
     const ban=document.getElementById('gts-pv-banner');
     ban.style.cssText=`position:absolute;top:0;left:0;right:0;display:flex;align-items:center;justify-content:center;gap:10px;padding:10px 16px;background:${bg};box-shadow:${shadow};border:${border}`;
+    const blabelSpan=document.getElementById('gts-pv-blbl').parentElement;
+    blabelSpan.style.color=txt;
+    const bbtnEl=document.getElementById('gts-pv-bbtn');
+    bbtnEl.style.color=txt;
+    bbtnEl.style.borderColor=txt+'66';
   }
   if(gtsCL==='inline'){
     const ilbl=gtsV('gts-inline-lbl')||'Language:', ibtn=gtsV('gts-inline-btn')||'Select';
