@@ -231,6 +231,10 @@ html,body{height:100%}
     </div>
     <div id="gts-banner-size" style="display:none">
       <div class="gts-row"><label>Push content</label><input type="range" id="gts-banner-push" min="32" max="64" value="42" oninput="gtsRender()"><span class="gts-val" id="gts-banner-push-v">42px</span></div>
+      <div class="gts-row"><label>Font size</label><input type="range" id="gts-banner-fs" min="11" max="20" value="13" oninput="gtsRender()"><span class="gts-val" id="gts-banner-fs-v">13px</span></div>
+    </div>
+    <div id="gts-inline-size" style="display:none">
+      <div class="gts-row"><label>Font size</label><input type="range" id="gts-inline-fs" min="11" max="20" value="13" oninput="gtsRender()"><span class="gts-val" id="gts-inline-fs-v">13px</span></div>
     </div>
 
     <div class="gts-sl">Colors</div>
@@ -365,6 +369,7 @@ function gtsSetLayout(l){
   document.getElementById('gts-corner-labels').style.display=l==='corner'?'block':'none';
   document.getElementById('gts-banner-size').style.display=l==='banner'?'block':'none';
   document.getElementById('gts-banner-labels').style.display=l==='banner'?'block':'none';
+  document.getElementById('gts-inline-size').style.display=l==='inline'?'block':'none';
   document.getElementById('gts-inline-labels').style.display=l==='inline'?'block':'none';
   gtsRender();
 }
@@ -432,6 +437,8 @@ function gtsRender(){
   }
   if(gtsCL==='banner'){
     const blbl=gtsV('gts-banner-lbl')||'View in:', bbtn=gtsV('gts-banner-btn')||'Select language';
+    const bfs=+gtsV('gts-banner-fs');
+    document.getElementById('gts-banner-fs-v').textContent=bfs+'px';
     document.getElementById('gts-pv-bic').innerHTML=gtsGicon(16);
     document.getElementById('gts-pv-blbl').textContent=blbl;
     document.getElementById('gts-pv-bbtn').innerHTML=bbtn+' ▼';
@@ -439,18 +446,26 @@ function gtsRender(){
     ban.style.cssText=`position:absolute;top:0;left:0;right:0;display:flex;align-items:center;justify-content:center;gap:10px;padding:10px 16px;background:${bg};box-shadow:${shadow};border:${border}`;
     const blabelSpan=document.getElementById('gts-pv-blbl').parentElement;
     blabelSpan.style.color=txt;
+    blabelSpan.style.fontSize=bfs+'px';
     const bbtnEl=document.getElementById('gts-pv-bbtn');
     bbtnEl.style.color=txt;
     bbtnEl.style.borderColor=txt+'66';
+    bbtnEl.style.fontSize=Math.max(10,bfs-1)+'px';
   }
   if(gtsCL==='inline'){
     const ilbl=gtsV('gts-inline-lbl')||'Language:', ibtn=gtsV('gts-inline-btn')||'Select';
+    const ifs=+gtsV('gts-inline-fs');
+    document.getElementById('gts-inline-fs-v').textContent=ifs+'px';
     document.getElementById('gts-pv-iic').innerHTML=gtsGicon(16);
     document.getElementById('gts-pv-ilbl').textContent=ilbl;
     document.getElementById('gts-pv-ibtn').innerHTML=ibtn+' ▼';
     const il=document.getElementById('gts-pv-inline');
     il.style.cssText=`position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);display:flex;align-items:center;gap:9px;padding:8px 16px;border-radius:${br}px;background:${bg};box-shadow:${shadow};border:${border}`;
     document.getElementById('gts-pv-itxt').style.color=txt;
+    document.getElementById('gts-pv-itxt').style.fontSize=ifs+'px';
+    const ibtnEl=document.getElementById('gts-pv-ibtn');
+    ibtnEl.style.color=txt;
+    ibtnEl.style.fontSize=Math.max(10,ifs-1)+'px';
   }
   gtsGenerateEmbed(bg,txt,icon,bdC,bdW,border,blur,spread,shC,shA,br,shadow);
 }
@@ -575,30 +590,32 @@ body{top:0!important}
 <div id="google_translate_element"></div>`;
   } else if(gtsCL==='banner'){
     const push=gtsV('gts-banner-push');
+    const bfs=gtsV('gts-banner-fs');
     const blbl=gtsV('gts-banner-lbl')||'View in:', bbtn=gtsV('gts-banner-btn')||'Select language';
     css=`#gt-banner{position:fixed;top:0;left:0;right:0;z-index:99999;display:flex;align-items:center;justify-content:center;gap:10px;padding:8px 20px;background:${bg};box-shadow:${shadow};border:${border}}
-#gt-banner-lbl{color:${txt};font-size:13px;font-weight:500;display:flex;align-items:center;gap:6px}
+#gt-banner-lbl{color:${txt};font-size:${bfs}px;font-weight:500;display:flex;align-items:center;gap:6px}
 #gt-banner-icon{color:${icon};line-height:0;width:15px;height:15px}
 #gt-menu{position:fixed;top:${+push+4}px;left:50%;transform:translateX(-50%);z-index:999999;background:${bg};border-radius:${Math.min(br,12)}px;box-shadow:${shadow};border:${border};padding:6px;min-width:150px;max-height:240px;overflow-y:auto;display:none;flex-direction:column;gap:2px}
 #gt-menu.open{display:flex}${shared}
 body{margin-top:${push}px!important;top:0!important}`;
     html=`<div id="gt-banner" data-trigger="true">
   <span id="gt-banner-lbl"><span id="gt-banner-icon">${svgIcon.replace(/1em/g,'100%')}</span> ${blbl}</span>
-  <button onclick="document.getElementById('gt-menu').classList.toggle('open')" style="background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.4);color:${txt};border-radius:6px;padding:4px 10px;font-size:13px;cursor:pointer">${bbtn} &#9660;</button>
+  <button onclick="document.getElementById('gt-menu').classList.toggle('open')" style="background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.4);color:${txt};border-radius:6px;padding:4px 10px;font-size:${Math.max(10,+bfs-1)}px;cursor:pointer">${bbtn} &#9660;</button>
 </div>
 <div id="gt-menu">\n${menuItems}\n</div>
 <div id="google_translate_element"></div>`;
   } else {
     const ilbl=gtsV('gts-inline-lbl')||'Language:', ibtn=gtsV('gts-inline-btn')||'Select';
+    const ifs=gtsV('gts-inline-fs');
     css=`#gt-inline{display:flex;align-items:center;justify-content:center;gap:8px;padding:7px 14px;border-radius:${br}px;background:${bg};box-shadow:${shadow};border:${border};position:relative;width:fit-content}
-#gt-inline-lbl{color:${txt};font-size:13px;font-weight:500;display:flex;align-items:center;gap:6px}
+#gt-inline-lbl{color:${txt};font-size:${ifs}px;font-weight:500;display:flex;align-items:center;gap:6px}
 #gt-inline-icon{color:${icon};line-height:0;width:15px;height:15px;display:flex;align-items:center}
 #gt-menu{position:absolute;top:110%;left:50%;transform:translateX(-50%);z-index:999999;background:${bg};border-radius:${Math.min(br,12)}px;box-shadow:${shadow};border:${border};padding:6px;min-width:150px;max-height:240px;overflow-y:auto;display:none;flex-direction:column;gap:2px}
 #gt-menu.open{display:flex}${shared}
 body{top:0!important}`;
     html=`<div id="gt-inline" data-trigger="true">
   <span id="gt-inline-lbl"><span id="gt-inline-icon">${svgIcon.replace(/1em/g,'100%')}</span> ${ilbl}</span>
-  <button onclick="document.getElementById('gt-menu').classList.toggle('open')" style="background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.4);color:${txt};border-radius:6px;padding:4px 10px;font-size:12px;cursor:pointer">${ibtn} &#9660;</button>
+  <button onclick="document.getElementById('gt-menu').classList.toggle('open')" style="background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.4);color:${txt};border-radius:6px;padding:4px 10px;font-size:${Math.max(10,+ifs-1)}px;cursor:pointer">${ibtn} &#9660;</button>
   <div id="gt-menu">\n${menuItems}\n  </div>
 </div>
 <div id="google_translate_element"></div>`;
